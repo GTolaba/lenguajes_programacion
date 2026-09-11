@@ -1,0 +1,12 @@
+% expresiones logicas validas
+
+es_expresion(V) :- member(V, [p, q, r, s]).
+es_expresion(C) :- member(C, [v, f]).
+
+es_expresion([neg, A]) :- es_expresion(A).
+es_expresion([A, Con, B]) :-
+    member(Con, [and, or, then]),
+    es_expresion(A),
+    es_expresion(B).
+
+%es_expresion([p, and, q]).
