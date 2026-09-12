@@ -1,0 +1,27 @@
+ruta('Buenos Aires', 'Rosario', 300).
+ruta('Rosario', 'Cordoba', 400).
+ruta('Cordoba', 'Tucuman', 550).
+ruta('Tucuman', 'Salta', 310).
+ruta('Buenos Aires', 'Mar del Plata', 415).
+ruta('Buenos Aires', 'Bahia Blanca', 650).
+ruta('Bahia Blanca', 'Bariloche', 970).
+ruta('Cordoba', 'Mendoza', 610).
+ruta('Rosario', 'Santa Fe', 170).
+
+conexion(Origen, Destino, Km) :- ruta(Origen, Destino, Km).
+conexion(Origen, Destino, Km) :- ruta(Destino, Origen, Km).
+
+calcular_ruta(Origen, Destino, Camino, DistanciaTotal) :-
+    buscar_ruta(Origen, Destino, [Origen], CaminoInvertido, DistanciaTotal),
+    reverse(CaminoInvertido, Camino).
+
+buscar_ruta(Destino, Destino, Visitados, Visitados, 0).
+
+buscar_ruta(Actual, Destino, Visitados, CaminoFinal, DistanciaTotal) :-
+    Actual \== Destino,
+    conexion(Actual, Intermedio, KmSiguiente),
+    \+ member(Intermedio, Visitados),
+    buscar_ruta(Intermedio, Destino, [Intermedio|Visitados], CaminoFinal, KmRestantes),
+    DistanciaTotal is KmSiguiente + KmRestantes.
+
+%calcular_ruta('Buenos Aires', 'Salta', Camino, Distancia).
