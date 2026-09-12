@@ -1,0 +1,23 @@
+% Programa en el que se tiene que mover todos los aros hacia el tercer poste
+% usando el segundo como un poste auxiliar. Para calcular los movimientos es
+% mov=(2^n )-1, donde n es el numero de aros
+
+hanoi(1, Origen, Destino, _) :-
+    write('Mover aro de '),
+    write(Origen),
+    write(' a '),
+    write(Destino),
+    nl.
+
+hanoi(N, Origen, Destino, Auxiliar) :-
+    N > 1,
+    M is N - 1,
+    hanoi(M, Origen, Auxiliar, Destino),
+    write('Mover aro de '),
+    write(Origen),
+    write(' a '),
+    write(Destino),
+    nl,
+    hanoi(M, Auxiliar, Destino, Origen).
+
+%hanoi(3, izquierda, derecha, centro).
